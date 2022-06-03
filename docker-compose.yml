@@ -1,0 +1,28 @@
+version: "2"
+services:
+  goof:
+    build: .
+    container_name: cesgoof
+    environment:
+      - DOCKER=1
+    ports:
+      - "3001:3001"
+      - "9229:9229"
+    links:
+      - cesgoof-mongo
+    depends_on:
+      - cesgoof-mongo
+  cesgoof-mongo:
+    container_name: cesgoof-mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+  cesgoof-mysql:
+    platform: linux/x86_64
+    container_name: cesgoof-mysql
+    image: mysql:5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: acme
+    ports:
+      - "3306:3306"
